@@ -51,7 +51,7 @@ function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <Link href='/projects'>All Projects</Link>
+            <Link href='/'>All Projects</Link>
           </li>
           <li>
             <Link href='/new-project'>Add New Project</Link>

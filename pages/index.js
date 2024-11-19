@@ -8,7 +8,7 @@
 // in order to get the database data.
 // We will fix this and provide a proper solution when we use the Contat API.
 
-import MeetupList from '../components/meetups/MeetupList'
+import ProjectList from '../components/projects/ProjectList'
 import { useState, useEffect } from "react";
 
 function HomePage() {
@@ -33,7 +33,7 @@ function HomePage() {
     if (meetups == null) {
         return null
     } else {
-    return <MeetupList meetups={meetups} />
+    return <ProjectList meetups={meetups} />
     }
 }
 

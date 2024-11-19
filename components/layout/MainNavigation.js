@@ -2,7 +2,6 @@ import classes from './MainNavigation.module.css'
 import Link from 'next/link'
 import HamMenu from "../generic/HamMenu"
 import Button from "../generic/Button"
-import { GiShoppingCart } from 'react-icons/gi'
 import { useState } from 'react'
 
 function MainNavigation() {
@@ -46,23 +45,21 @@ function MainNavigation() {
       {popupToggle ? <Button text1="Ternary" text2="operator" maxWidth="100px" onClickHandler={() => toggleMenuHide()} /> : null}
       {/* Another conditional rendering alternative: */}
       {popupToggle && <Button text1="Another JSX" text2="alternative" maxWidth="100px" onClickHandler={() => toggleMenuHide()} />}
-      <Button text2={"Show me A"+testTest} maxWidth="70px" onClickHandler={() => toggleMenuHide()} />
-      <Button text2="Show me B" maxWidth="70px" hide="" onClickHandler={() => toggleMenuHide()} />
-      <Button text2="Show me C" maxWidth="70px" hide=" " onClickHandler={() => toggleMenuHide()} />
+      
       <HamMenu toggleMenuHide={() => toggleMenuHide()} />
-      <div className={classes.logo}>React Meetups</div>
+      <div className={classes.logo}>Personal Task Manager</div>
       <nav>
         <ul>
           <li>
-            <Link href='/'>All Meetups</Link>
+            <Link href='/projects'>All Projects</Link>
           </li>
           <li>
-            <Link href='/new-meetup'>Add New Meetup</Link>
+            <Link href='/new-project'>Add New Project</Link>
           </li>
         </ul>
       </nav>
-      <Button text1="Checkout" maxWidth="100px" onClickHandler={() => checkoutCallback()} icon={<GiShoppingCart />} />
-      <Button text2="Orders" maxWidth="70px" onClickHandler={() => ordersCallback(noOfOrders)} />
+      <Button text1="Register" maxWidth="100px" onClickHandler={() => checkoutCallback()}/>
+      <Button text2="Login" maxWidth="70px" onClickHandler={() => ordersCallback(noOfOrders)} />
     </header>
   );
 }

@@ -19,7 +19,7 @@ function HomePage() {
     }, []);
 
     async function getAllMeetings() {
-        const response = await fetch('/api/get-meetings', {
+        const response = await fetch('/api/get-projects', {
             method: 'POST',
             body: JSON.stringify({meetups: 'all'}),
             headers: {

@@ -13,4 +13,4 @@ function ProjectDetails() {
     )
 }
 
-export default MeetupDetails;
+export default ProjectDetails;

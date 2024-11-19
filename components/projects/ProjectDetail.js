@@ -1,6 +1,6 @@
 import classes from './ProjectDetail.module.css'
 
-function ProjectpDetail(props) {
+function ProjectDetail(props) {
     return (
         <section className={classes.detail}>
             <img src={props.image} alt={props.title} />

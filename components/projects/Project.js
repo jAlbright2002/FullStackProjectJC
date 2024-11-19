@@ -1,11 +1,11 @@
-import MeetupItem from './MeetupItem';
-import classes from './MeetupList.module.css';
+import ProjectItem from './ProjectItem';
+import classes from './ProjectList.module.css';
 
-function MeetupList(props) {
+function ProjectList(props) {
   return (
     <ul className={classes.list}>
       {props.meetups.map((meetup) => (
-        <MeetupItem
+        <ProjectItem
           key={meetup.meetingId}
           id={meetup.meetingId}
           image={meetup.image}
@@ -17,4 +17,4 @@ function MeetupList(props) {
   );
 }
 
-export default MeetupList;
+export default ProjectList;

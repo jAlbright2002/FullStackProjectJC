@@ -1,7 +1,7 @@
-// /api/new-meetup
+// /api/new-project
 
 async function handler(req, res) { // can be called anything you like
-  const response = await fetch('http://localhost:8000/getMeetings', {
+  const response = await fetch('http://localhost:8000/getProjects', {
     method: 'POST',
     body: JSON.stringify(req.body),
     headers: {

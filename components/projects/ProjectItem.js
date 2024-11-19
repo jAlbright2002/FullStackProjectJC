@@ -1,8 +1,8 @@
 import Card from '../ui/Card';
-import classes from './MeetupItem.module.css';
+import classes from './ProjectItem.module.css';
 import { useRouter } from 'next/router';
 
-function MeetupItem(props) {
+function ProjectItem(props) {
   const router = useRouter();
 
   function showDetailsHandler() {
@@ -27,4 +27,4 @@ function MeetupItem(props) {
   );
 }
 
-export default MeetupItem;
+export default ProjectItem;

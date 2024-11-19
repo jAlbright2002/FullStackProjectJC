@@ -1,6 +1,6 @@
-import classes from './MeetupDetail.module.css'
+import classes from './ProjectDetail.module.css'
 
-function MeetupDetail(props) {
+function ProjectDetail(props) {
     return (
         <section className={classes.detail}>
             <img src={props.image} alt={props.title} />
@@ -11,4 +11,4 @@ function MeetupDetail(props) {
     )
 }
 
-export default MeetupDetail
+export default ProjectDetail

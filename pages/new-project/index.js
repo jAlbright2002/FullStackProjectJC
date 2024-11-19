@@ -1,11 +1,11 @@
-// our-dimain.com/new-meetup
-import NewMeetupForm from '../../components/meetups/NewMeetupForm'
+// our-dimain.com/new-project
+import NewProjectForm from '../../components/projects/NewProjectForm'
 import { useRouter } from 'next/router';
 
-function NewMeetupPage() {
+function NewProjectPage() {
     const router = useRouter();
     async function addMeetupHandler(enteredMeetupData)  {
-        const response = await fetch('/api/new-meetup', {
+        const response = await fetch('/api/new-project', {
             method: 'POST',
             body: JSON.stringify(enteredMeetupData),
             headers: {
@@ -16,7 +16,7 @@ function NewMeetupPage() {
         router.push('/');
     }
 
-    return <NewMeetupForm onAddMeetup={addMeetupHandler} />
+    return <NewProjectForm onAddMeetup={addMeetupHandler} />
 }
 
-export default NewMeetupPage
+export default NewProjectPage

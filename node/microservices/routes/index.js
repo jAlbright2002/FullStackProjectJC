@@ -50,4 +50,45 @@ async function saveMeeting(theMeeting) {
   return { saveMeetingResponse: "success" };
 }
 
+let ticketSchema = new Schema({
+  title: String,
+  description: String,
+  project: String
+}, { collection: 'ticket' });
+
+let ticket = oldMong.model('ticket', meetingSchema);
+
+router.get('/', async function (req, res, next) {
+  const tickets = await getTicket();
+  res.render('index');
+});
+
+router.post('/getTickets', async function (req, res, next) {
+  const tickets = await getTicket();
+  res.json(tickets);
+});
+
+async function getTicket() {
+  data = await ticket.find().lean();
+  return { ticket: data };
+}
+
+router.post('/saveProject', async function (req, res, next) {
+  const tickets = await saveTicket(req.body);
+  res.json(tickets);
+});
+
+async function saveTicket(theTicket) {
+  console.log('theTicket: ' + theTicket);
+  await meetings.create(theTicket,
+    function (err, res) {
+      if (err) {
+        console.log('Could not insert new ticket')
+        return { saveMeetingResponse: "fail" };
+      }
+    }
+  )
+  return { saveMeetingResponse: "success" };
+}
+
 module.exports = router;

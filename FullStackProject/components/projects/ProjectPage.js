@@ -3,11 +3,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styles from './ProjectPage.module.css';
 import { useRouter } from 'next/router';
 
-function projectDetails(props){
-    const router = useRouter();
+function projectChanger(props){
+    const router = useRouter(); 
 
     function navigateToAddTicket(){
-        router.push('/' + props.id);
     }
     const [columns, setColumns] = useState({
         'to-do': {
@@ -103,6 +102,6 @@ function projectDetails(props){
       );
     }
     
-export default projectDetails;
+export default projectChanger;
     
 

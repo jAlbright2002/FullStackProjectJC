@@ -2,8 +2,10 @@ import { useRef } from 'react';
 
 import Card from '../ui/Card';
 import classes from './NewProjectForm.module.css';
+import { useRouter } from 'next/router';
 
 function NewProjectForm(props) {
+  const router = useRouter();
   const titleInputRef = useRef();
   const descriptionInputRef = useRef();
 

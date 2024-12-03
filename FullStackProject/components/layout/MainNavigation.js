@@ -17,36 +17,9 @@ function MainNavigation() {
     alert("You clicked the checkout button")
   }
 
-  let menuPopupJsx
-
-  function toggleMenuHide() {
-    if (popupToggle == true) {
-      setPopupToggle(false)
-    } else {
-      setPopupToggle(true)
-    }
-  }
-  if (popupToggle == true) {
-    menuPopupJsx = <Button text1="The Menu" maxWidth="100px" onClickHandler={() => toggleMenuHide()} />
-
-  } else {
-    menuPopupJsx = undefined
-  }
-
-  let testTest = 0;
- // setInterval(() => {testTest++; console.log(testTest)}, 1000);
-
   return (
     <header className={classes.header}>
-      {/* Original JSX logic: */}
-      {menuPopupJsx}
-      {/* Move the show / hide code to the component itself: */}
-      {/* Ternary operator alternative: */}
-      {popupToggle ? <Button text1="Ternary" text2="operator" maxWidth="100px" onClickHandler={() => toggleMenuHide()} /> : null}
-      {/* Another conditional rendering alternative: */}
-      {popupToggle && <Button text1="Another JSX" text2="alternative" maxWidth="100px" onClickHandler={() => toggleMenuHide()} />}
-      
-      <HamMenu toggleMenuHide={() => toggleMenuHide()} />
+      <HamMenu/>
       <div className={classes.logo}>Personal Task Manager</div>
       <nav>
         <ul>
@@ -55,6 +28,9 @@ function MainNavigation() {
           </li>
           <li>
             <Link href='/new-project'>Add New Project</Link>
+          </li>
+          <li>
+            <Link href='/new-ticket'>Add New Ticket</Link>
           </li>
         </ul>
       </nav>

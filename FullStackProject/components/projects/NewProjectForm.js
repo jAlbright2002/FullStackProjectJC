@@ -15,13 +15,13 @@ function NewProjectForm(props) {
     const enteredTitle = titleInputRef.current.value;
     const enteredDescription = descriptionInputRef.current.value;
 
-    const meetupData = {
-      meetingId: enteredTitle,
+    const projectData = {
+      projectId: enteredTitle,
       title: enteredTitle,
       description: enteredDescription,
     };
 
-    props.onAddMeetup(meetupData);
+    props.onAddProject(projectData);
   }
 
   return (

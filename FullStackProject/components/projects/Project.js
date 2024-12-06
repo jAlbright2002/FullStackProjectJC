@@ -4,11 +4,11 @@ import classes from './ProjectList.module.css';
 function ProjectList(props) {
   return (
     <ul className={classes.list}>
-      {props.meetups.map((meetup) => (
+      {props.projects.map((project) => (
         <ProjectItem
-          key={meetup.meetingId}
-          id={meetup.meetingId}
-          title={meetup.title}
+          key={project.projectId}
+          id={project.projectId}
+          title={project.title}
         />
       ))}
     </ul>

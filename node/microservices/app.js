@@ -10,6 +10,10 @@ var hbs = require('express-handlebars');
 
 var app = express();
 
+const cors = require('cors');
+app.use(cors({
+    origin: 'http://localhost:3000',  // Your frontend URL
+}));
 
 // view engine setup
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layouts'}));

@@ -12,28 +12,28 @@ import ProjectList from '../components/projects/ProjectList'
 import { useState, useEffect } from "react";
 
 function HomePage() {
-    const [meetups, setMeetups] = useState(null);
+    const [projects, setProjects] = useState(null);
 
     useEffect(() => {
-        getAllMeetings()
+        getAllProjects()
     }, []);
 
-    async function getAllMeetings() {
+    async function getAllProjects() {
         const response = await fetch('/api/get-projects', {
             method: 'POST',
-            body: JSON.stringify({meetups: 'all'}),
+            body: JSON.stringify({projects: 'all'}),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
         let data = await response.json();
-        setMeetups(data.meetings);
+        setProjects(data.projects);
     }
 
-    if (meetups == null) {
+    if (projects == null) {
         return null
     } else {
-    return <ProjectList meetups={meetups} />
+    return <ProjectList projects={projects} />
     }
 }
 

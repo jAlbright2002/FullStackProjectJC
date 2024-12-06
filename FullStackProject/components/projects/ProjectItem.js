@@ -9,6 +9,22 @@ function ProjectItem(props) {
     router.push('/' + props.id);
   }
 
+  async function deleteProjectHandler() {
+    var id = props.id;
+    try {
+      const response = await fetch(`/api/delete-project?id=${id}`);
+      response, {
+        method: 'DELETE',
+      };
+      if (response.ok) {
+        console.log('Project deleted successfully');
+        router.reload('/');
+      }
+    } catch (error) {
+      console.error('Error deleting project:', error);
+    }
+  }
+
   return (
     <li className={classes.item}>
       <Card>
@@ -18,7 +34,8 @@ function ProjectItem(props) {
           </div>
           <div className={classes.actions}>
             <button onClick={showDetailsHandler}>Show Details</button>
-            </div>
+            <button className={classes.delete} onClick={deleteProjectHandler}>Delete</button>
+          </div>
         </div>
       </Card>
     </li>

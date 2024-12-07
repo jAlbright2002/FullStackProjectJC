@@ -1,6 +1,5 @@
 export default async function handler(req, res) {
     const { id } = req.query;  // Extract the id from the query parameters
-    console.log(id);
     try {
       const response = await fetch(`http://localhost:8000/deleteProject/${id}`, {
         method: 'DELETE',

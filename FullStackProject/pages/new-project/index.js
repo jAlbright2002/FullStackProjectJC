@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 
 function NewProjectPage() {
     const router = useRouter();
-    async function addMeetupHandler(enteredMeetupData)  {
+    async function addProjectHandler(enteredProjectData)  {
         const response = await fetch('/api/new-project', {
             method: 'POST',
-            body: JSON.stringify(enteredMeetupData),
+            body: JSON.stringify(enteredProjectData),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -16,7 +16,7 @@ function NewProjectPage() {
         router.push('/');
     }
 
-    return <NewProjectForm onAddMeetup={addMeetupHandler} />
+    return <NewProjectForm onAddProject={addProjectHandler} />
 }
 
 export default NewProjectPage

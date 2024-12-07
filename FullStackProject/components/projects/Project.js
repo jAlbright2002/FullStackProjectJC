@@ -9,7 +9,6 @@ function ProjectList(props) {
           key={project.projectId}
           id={project.projectId}
           title={project.title}
-          delete={project.deleteBtn}
         />
       ))}
     </ul>

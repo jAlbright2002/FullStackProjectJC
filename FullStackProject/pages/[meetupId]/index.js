@@ -1,10 +1,10 @@
-import ViewTickets from '../../components/projects/ViewTickets'
+import TaskCard from '../../components/projects/ProjectPage';
 import { useRouter } from 'next/router';
 
 function ProjectDetails() {
     const router = useRouter();
     const { id } = router.query;
-    return <ViewTickets id={id} />;
+    return <TaskCard id={id} />;
     
 }
 

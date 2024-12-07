@@ -1,34 +1,24 @@
-.page {
-    padding: 20px;
-  }
-  
-  .addButton {
-    margin-bottom: 20px;
-    padding: 10px 20px;
-    background-color: #0070f3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .dndContainer {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .column {
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    width: 30%;
-    padding: 10px;
-  }
-  
-  .item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 10px 0;
-    padding: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  }
+.task-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px;
+  width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+}
+
+.task-information h4 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.task-information p {
+  font-size: 14px;
+  color: #555;
+}

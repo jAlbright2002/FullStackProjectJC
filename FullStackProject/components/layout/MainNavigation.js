@@ -1,38 +1,56 @@
-import classes from './MainNavigation.module.css'
-import Link from 'next/link'
-import HamMenu from "../generic/HamMenu"
-import Button from "../generic/Button"
-import { useState } from 'react'
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import HamMenu from '../generic/HamMenu';
+import classes from './MainNavigation.module.css';
 
 function MainNavigation() {
-
   const [popupToggle, setPopupToggle] = useState(false);
+  const router = useRouter();
 
   function toggleMenuHide() {
-    console.log('Hamburger menu clicked'); // Debugging log
     setPopupToggle((prevState) => !prevState);
   }
-  
+
+  function closeMenuAndNavigate(url) {
+    setPopupToggle(false); 
+    router.push(url); 
+  }
 
   return (
     <header className={classes.header}>
-      <HamMenu/>
+      <HamMenu toggleMenuHide={toggleMenuHide} />
       <div className={classes.logo}>Personal Task Manager</div>
-      <nav>
-        <ul>
-          <li>
-            <Link href='/'>All Projects</Link>
-          </li>
-          <li>
-            <Link href='/new-project'>Add New Project</Link>
-          </li>
-          <li>
-            <Link href='/new-ticket'>Add New Ticket</Link>
-          </li>
-        </ul>
-      </nav>
+
+      {popupToggle && (
+        <div className={classes.dropdownMenu}>
+          <nav>
+            <ul>
+              <li>
+                <Link href='/'>
+                  <a onClick={() => closeMenuAndNavigate('/')}>All Projects</a>
+                </Link>
+              </li>
+              <li>
+                <Link href='/new-project'>
+                  <a onClick={() => closeMenuAndNavigate('/new-project')}>
+                    Add New Project
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href='/new-ticket'>
+                  <a onClick={() => closeMenuAndNavigate('/new-ticket')}>
+                    Add New Ticket
+                  </a>
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
 
-export default MainNavigation
+export default MainNavigation;

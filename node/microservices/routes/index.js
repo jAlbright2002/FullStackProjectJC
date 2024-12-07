@@ -83,6 +83,42 @@ async function deleteProject(projectId) {
   }
 }
 
+router.put('/updateProject/:id', async (req, res) => {
+  const projectId = req.params.id; 
+  const updatedData = req.body; 
+
+  try {
+    const project = await updateProject(projectId, updatedData);
+    if (project.updateProjectResponse === 'success') {
+      res.json({ message: 'Project updated successfully', project });
+    } else {
+      res.status(404).json({ error: 'Project not found' });
+    }
+  } catch (err) {
+    console.log('Error updating project:', err);
+    res.status(500).json({ error: 'Could not update project' });
+  }
+});
+
+async function updateProject(projectId, updatedData) {
+  try {
+    const updatedProject = await projects.findOneAndUpdate(
+      { projectId: projectId }, 
+      updatedData,              
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedProject) {
+      console.log('No project found with the given projectId');
+      return { updateProjectResponse: "fail" };
+    }
+
+    return { updateProjectResponse: "success", updatedProject };
+  } catch (err) {
+    console.log('Error during update:', err);
+    return { updateProjectResponse: "fail" };
+  }
+}
 
 
 //Ticket CRUD

@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import Card from '../ui/Card';
 import classes from './NewProjectForm.module.css';
 import { useRouter } from 'next/router';
+import { createId } from '@paralleldrive/cuid2';
 
 function NewProjectForm(props) {
   const router = useRouter();
@@ -15,13 +16,13 @@ function NewProjectForm(props) {
     const enteredTitle = titleInputRef.current.value;
     const enteredDescription = descriptionInputRef.current.value;
 
-    const meetupData = {
-      meetingId: enteredTitle,
+    const projectData = {
+      projectId: createId(),
       title: enteredTitle,
       description: enteredDescription,
     };
 
-    props.onAddMeetup(meetupData);
+    props.onAddProject(projectData);
   }
 
   return (

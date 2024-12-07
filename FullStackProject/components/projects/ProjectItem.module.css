@@ -22,6 +22,12 @@
   color: #2c292b;
 }
 
+.delete {
+  margin-left: 0.5rem;
+  color: #77002e;
+  background-color: #77002e;
+}
+
 .actions {
   padding: 1rem;
   text-align: center;

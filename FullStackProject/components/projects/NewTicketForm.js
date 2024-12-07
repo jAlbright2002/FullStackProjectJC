@@ -1,24 +1,40 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 import Card from '../ui/Card';
 import classes from './NewTicketForm.module.css';
+import { createId } from '@paralleldrive/cuid2';
 
 function NewTicketForm(props) {
     const titleInputRef = useRef();
     const descriptionInputRef = useRef();
-    const projectInputRef = useRef();
+    const projectSelectRef = useRef();
+
+    useEffect(() => {
+      fetch('/api/get-projects')
+        .then((response) => response.json())
+        .then((data) => {
+          const projectSelect = projectSelectRef.current;
+          data.forEach((project) => {
+            const option = document.createElement('option');
+            option.value = project.id;
+            option.textContent = project.name;
+            projectSelect.appendChild(option);
+          });
+        })
+    }, []);
   
     function submitHandler(event) {
       event.preventDefault();
   
       const enteredTitle = titleInputRef.current.value;
       const enteredDescription = descriptionInputRef.current.value;
-      const enteredProject = projectInputRef.current.value;
+      const selectedProject = projectSelectRef.current.value;
   
       const ticketData = {
+        ticketId: createId(),
         title: enteredTitle,
         description: enteredDescription,
-        project: enteredProject
+        project: selectedProject
       };
   
       props.onAddTicket(ticketData);
@@ -41,8 +57,13 @@ function NewTicketForm(props) {
             ></textarea>
           </div>
           <div className={classes.control}>
-            <label htmlFor='project'>Project Name</label>
-            <input type='text' required id='project' ref={projectInputRef} />
+          <label htmlFor="project">Project Name</label>
+          <select id="project" required ref={projectSelectRef}>
+            <option value="" disabled>
+              Select a project
+            </option>
+            {}
+          </select>
           </div>
           <div className={classes.actions}>
             <button>Add Ticket</button>

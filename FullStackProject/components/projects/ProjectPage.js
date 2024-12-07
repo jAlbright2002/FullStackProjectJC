@@ -13,16 +13,6 @@ const TaskCard = ({ item, index }) => {
         >
           <div className="task-information">
             <p>{item.Task}</p>
-            <div className="secondary-details">
-              <p>
-                <span>
-                  {new Date(item.Due_Date).toLocaleDateString('en-us', {
-                    month: 'short',
-                    day: '2-digit',
-                  })}
-                </span>
-              </p>
-            </div>
           </div>
         </div>
       )}

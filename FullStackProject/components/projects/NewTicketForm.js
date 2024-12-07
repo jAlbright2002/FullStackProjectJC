@@ -10,18 +10,43 @@ function NewTicketForm(props) {
     const projectSelectRef = useRef();
 
     useEffect(() => {
-      fetch('/api/get-projects')
-        .then((response) => response.json())
-        .then((data) => {
-          const projectSelect = projectSelectRef.current;
-          data.forEach((project) => {
-            const option = document.createElement('option');
-            option.value = project.id;
-            option.textContent = project.name;
-            projectSelect.appendChild(option);
-          });
-        })
+      getAllProjects()
     }, []);
+
+    async function getAllProjects() {
+      try {
+        const response = await fetch('/api/get-projects', {
+          method: 'POST',
+          body: JSON.stringify({ projects: 'all' }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+    
+        // Check if the response is OK
+        if (!response.ok) {
+          throw new Error(`Failed to fetch projects: ${response.statusText}`);
+        }
+    
+        const { projects } = await response.json(); // Assuming the response has a `projects` array
+    
+        const projectSelect = projectSelectRef.current;
+    
+        // Clear existing options
+        projectSelect.innerHTML = '<option value="" disabled>Select a project</option>';
+    
+        // Populate the dropdown with projects
+        projects.forEach((project) => {
+          const option = document.createElement('option');
+          option.value = project.projectId; // Assuming `projectId` exists
+          option.textContent = project.title; // Assuming `title` exists
+          projectSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    }
+    
   
     function submitHandler(event) {
       event.preventDefault();

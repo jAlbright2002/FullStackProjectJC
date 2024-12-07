@@ -19,11 +19,13 @@ let projects = oldMong.model('projects', projectSchema);
 
 router.get('/', async function (req, res, next) {
   const projects = await getAllProjects();
+  console.log(projects);
   res.render('index');
 });
 
 router.post('/getProjects', async function (req, res, next) {
   const projects = await getAllProjects();
+  console.log(projects);
   res.json(projects);
 });
 
@@ -38,7 +40,6 @@ router.post('/saveProject', async function (req, res, next) {
 });
 
 async function saveProject(project) {
-  console.log('Project: ' + project);
   await projects.create(project,
     function (err, res) {
       if (err) {
@@ -50,9 +51,8 @@ async function saveProject(project) {
   return { saveProjectResponse: "success" };
 }
 
-// Correct route with id in the URL
 router.delete('/deleteProject/:id', async (req, res) => {
-  const projectId = req.params.id; // Retrieve the project ID from the URL
+  const projectId = req.params.id;
   try {
     const project = await deleteProject(projectId);
     if (project.deleteProjectResponse === 'success') {
@@ -68,13 +68,9 @@ router.delete('/deleteProject/:id', async (req, res) => {
 
 
 async function deleteProject(projectId) {
-  console.log('Project: ' + projectId);
-
   try {
-    // Find the project by the custom 'projectId' field, not by '_id'
     const deletedProject = await projects.findOneAndDelete({ projectId: projectId });
 
-    // Check if the project was deleted
     if (!deletedProject) {
       console.log('No project found with the given projectId');
       return { deleteProjectResponse: "fail" };
@@ -114,7 +110,7 @@ async function getTicket() {
   return { ticket: data };
 }
 
-router.post('/saveProject', async function (req, res, next) {
+router.post('/saveTicket', async function (req, res, next) {
   const tickets = await saveTicket(req.body);
   res.json(tickets);
 });

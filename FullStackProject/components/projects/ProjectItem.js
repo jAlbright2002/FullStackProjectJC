@@ -6,7 +6,7 @@ function ProjectItem(props) {
   const router = useRouter();
 
   function showDetailsHandler() {
-    //This should route to the task list page
+    router.push('/' + props.id);
   }
 
   async function deleteProjectHandler() {

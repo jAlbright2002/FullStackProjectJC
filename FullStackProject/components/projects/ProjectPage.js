@@ -3,11 +3,11 @@ import { Draggable } from 'react-beautiful-dnd';
 import './ProjectPage.module.css'; 
 import { useRouter } from 'next/router';
 
-const TaskCard = ({ item, index }) => {
+const TaskCard = ({ id, item, index }) => {
   const router = useRouter();
   
   return (
-    <Draggable key={item.ticketId} draggableId={item.ticketId} index={index}>
+    <Draggable key={id} draggableId={id} index={index}>
       {(provided) => (
         <div
           ref={provided.innerRef}

@@ -5,17 +5,14 @@ import Button from "../generic/Button"
 import { useState } from 'react'
 
 function MainNavigation() {
-  let noOfOrders = 50;
 
-  let [popupToggle, setPopupToggle] = useState(false)
+  const [popupToggle, setPopupToggle] = useState(false);
 
-  function ordersCallback(aNumber) {
-    alert("You clicked the button, and passed: " + aNumber)
+  function toggleMenuHide() {
+    console.log('Hamburger menu clicked'); // Debugging log
+    setPopupToggle((prevState) => !prevState);
   }
-
-  function checkoutCallback() {
-    alert("You clicked the checkout button")
-  }
+  
 
   return (
     <header className={classes.header}>
@@ -34,8 +31,6 @@ function MainNavigation() {
           </li>
         </ul>
       </nav>
-      <Button text1="Register" maxWidth="100px" onClickHandler={() => checkoutCallback()}/>
-      <Button text2="Login" maxWidth="70px" onClickHandler={() => ordersCallback(noOfOrders)} />
     </header>
   );
 }

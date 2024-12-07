@@ -1,43 +1,56 @@
-import classes from './MainNavigation.module.css'
-import Link from 'next/link'
-import HamMenu from "../generic/HamMenu"
-import Button from "../generic/Button"
-import { useState } from 'react'
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import HamMenu from '../generic/HamMenu';
+import classes from './MainNavigation.module.css';
 
 function MainNavigation() {
-  let noOfOrders = 50;
+  const [popupToggle, setPopupToggle] = useState(false);
+  const router = useRouter();
 
-  let [popupToggle, setPopupToggle] = useState(false)
-
-  function ordersCallback(aNumber) {
-    alert("You clicked the button, and passed: " + aNumber)
+  function toggleMenuHide() {
+    setPopupToggle((prevState) => !prevState);
   }
 
-  function checkoutCallback() {
-    alert("You clicked the checkout button")
+  function closeMenuAndNavigate(url) {
+    setPopupToggle(false); 
+    router.push(url); 
   }
 
   return (
     <header className={classes.header}>
-      <HamMenu/>
+      <HamMenu toggleMenuHide={toggleMenuHide} />
       <div className={classes.logo}>Personal Task Manager</div>
-      <nav>
-        <ul>
-          <li>
-            <Link href='/'>All Projects</Link>
-          </li>
-          <li>
-            <Link href='/new-project'>Add New Project</Link>
-          </li>
-          <li>
-            <Link href='/new-ticket'>Add New Ticket</Link>
-          </li>
-        </ul>
-      </nav>
-      <Button text1="Register" maxWidth="100px" onClickHandler={() => checkoutCallback()}/>
-      <Button text2="Login" maxWidth="70px" onClickHandler={() => ordersCallback(noOfOrders)} />
+
+      {popupToggle && (
+        <div className={classes.dropdownMenu}>
+          <nav>
+            <ul>
+              <li>
+                <Link href='/'>
+                  <a onClick={() => closeMenuAndNavigate('/')}>All Projects</a>
+                </Link>
+              </li>
+              <li>
+                <Link href='/new-project'>
+                  <a onClick={() => closeMenuAndNavigate('/new-project')}>
+                    Add New Project
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href='/new-ticket'>
+                  <a onClick={() => closeMenuAndNavigate('/new-ticket')}>
+                    Add New Ticket
+                  </a>
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
 
-export default MainNavigation
+export default MainNavigation;

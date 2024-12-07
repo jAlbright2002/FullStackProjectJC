@@ -23,23 +23,17 @@ function NewTicketForm(props) {
           },
         });
     
-        // Check if the response is OK
         if (!response.ok) {
           throw new Error(`Failed to fetch projects: ${response.statusText}`);
         }
-    
-        const { projects } = await response.json(); // Assuming the response has a `projects` array
-    
+        const { projects } = await response.json();
         const projectSelect = projectSelectRef.current;
     
-        // Clear existing options
         projectSelect.innerHTML = '<option value="" disabled>Select a project</option>';
-    
-        // Populate the dropdown with projects
         projects.forEach((project) => {
           const option = document.createElement('option');
-          option.value = project.projectId; // Assuming `projectId` exists
-          option.textContent = project.title; // Assuming `title` exists
+          option.value = project.projectId;
+          option.textContent = project.title;
           projectSelect.appendChild(option);
         });
       } catch (error) {

@@ -1,24 +1,50 @@
-.task-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
+.layout__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  background-color: #f8f8f8;
+  padding: 20px;
+}
+
+.card {
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 16px;
-  margin: 8px;
-  width: 200px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
 }
 
-.task-card:hover {
-  transform: translateY(-5px);
+.column-list {
+  display: flex;
+  gap: 20px; /* Space between columns */
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
 }
 
-.task-information h4 {
-  font-size: 18px;
-  margin-bottom: 8px;
+.column-item {
+  display: inline-block;
+  width: 300px; /* Make sure columns have some fixed width */
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ddd; /* Make the box more visible */
 }
 
-.task-information p {
-  font-size: 14px;
-  color: #555;
+.column-container {
+  padding: 10px;
+  background-color: #e8e8e8;
+  border-radius: 8px;
+  border: 1px solid #ccc; /* Border around the column container */
+}
+
+.items-container {
+  margin-top: 10px;
+}
+
+.item-container {
+  padding: 10px;
+  background-color: #fff;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }

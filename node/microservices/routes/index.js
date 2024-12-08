@@ -34,6 +34,17 @@ async function getAllProjects() {
   return { projects: data };
 }
 
+router.post('/getProject/:id', async function (req, res, next) {
+  const projects = await getProject();
+  console.log(projects);
+  res.json(projects);
+});
+
+async function getProject() {
+  data = await projects.find().lean();
+  return { projects: data };
+}
+
 router.post('/saveProject', async function (req, res, next) {
   const projects = await saveProject(req.body);
   res.json(projects);
@@ -84,13 +95,13 @@ async function deleteProject(projectId) {
 }
 
 router.put('/updateProject/:id', async (req, res) => {
-  const projectId = req.params.id; 
-  const updatedData = req.body; 
+  const { id } = req.query;  // Get project ID from query params
+  const updatedData = req.body;  // Get updated data from the request body
 
   try {
-    const project = await updateProject(projectId, updatedData);
+    const project = await updateProject(id, updatedData);
     if (project.updateProjectResponse === 'success') {
-      res.json({ message: 'Project updated successfully', project });
+      res.status(200).json({ message: 'Project updated successfully', project });
     } else {
       res.status(404).json({ error: 'Project not found' });
     }

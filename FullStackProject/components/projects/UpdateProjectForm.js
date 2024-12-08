@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Card from '../ui/Card';
-import classes from './UpdateProjectForm.module.css';
+import { updateProjectData } from '../../pages/api/update-project'
+import classes from './NewProjectForm.module.css';
 
 function UpdateProjectForm({ project, onUpdateProject }) {
   const titleInputRef = useRef();

@@ -1,4 +1,4 @@
-async function handler(req, res) { // can be called anything you like
+async function handler(req, res) { 
   const response = await fetch('http://localhost:8000/saveProject', {
     method: 'POST',
     body: JSON.stringify(req.body),

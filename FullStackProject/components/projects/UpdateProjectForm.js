@@ -44,16 +44,16 @@ function UpdateProjectForm({ project }) {
   async function submitHandler(event) {
     event.preventDefault();
   
-    const enteredTitle = titleInputRef.current.value; // Get the value, not the ref
+    const enteredTitle = titleInputRef.current.value;
     const enteredDescription = descriptionInputRef.current.value;
   
     try {
       const updatedProject = await updateProjectHandler(
         project.projectId,
         enteredTitle,
-        enteredDescription // Use values here
+        enteredDescription
       );
-      router.push(`/`); // Navigate to the desired page
+      router.push(`/`);
     } catch (error) {
       console.error('Error during project update:', error);
     }

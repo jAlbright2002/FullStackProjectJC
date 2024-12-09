@@ -33,22 +33,18 @@ async function getAllProjects() {
 }
 
 router.get('/getProject/:id', async function (req, res, next) {
-  const { id } = req.params; // Extract 'id' from the URL parameters
+  const { id } = req.params; 
   try {
-    // Find the project with the given ID
     const project = await projects.findOne({ projectId: id }).lean();
 
     if (!project) {
-      // If no project is found, send a 404 response
       return res.status(404).json({ error: 'Project not found' });
     }
 
-    // Return the found project as JSON
     res.json(project);
   } catch (error) {
     console.error('Error fetching project:', error);
 
-    // Send a 500 response for any server errors
     res.status(500).json({ error: 'Failed to fetch project', details: error.message });
   }
 });
@@ -103,7 +99,7 @@ async function deleteProject(projectId) {
 }
 
 router.put('/updateProject/:id', async (req, res) => {
-  const { id } = req.params;  // Use req.params to access the dynamic route parameter
+  const { id } = req.params;
   const updatedData = req.body;
 
   try {

@@ -1,4 +1,3 @@
-// our-dimain.com/new-project
 import NewProjectForm from '../../components/projects/NewProjectForm'
 import { useRouter } from 'next/router';
 

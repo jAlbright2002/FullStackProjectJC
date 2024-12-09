@@ -6,13 +6,13 @@ function ProjectItem(props) {
   const router = useRouter();
 
   function showDetailsHandler() {
+    //This should route to the task list page
     router.push('/' + props.id);
   }
 
   async function deleteProjectHandler() {
-    var id = props.id;
     try {
-      const response = await fetch(`/api/delete-project?id=${id}`);
+      const response = await fetch(`/api/delete-project?id=${props.id}`);
       response, {
         method: 'DELETE',
       };

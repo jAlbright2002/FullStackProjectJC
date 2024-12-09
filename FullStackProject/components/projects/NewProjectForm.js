@@ -1,59 +1,52 @@
-// pages/update-project/index.js
-import { useEffect, useState } from 'react';
+import { useRef } from 'react';
+
+import Card from '../ui/Card';
+import classes from './NewProjectForm.module.css';
 import { useRouter } from 'next/router';
-import UpdatedProjectForm from '../../components/projects/UpdateProjectForm';
+import { createId } from '@paralleldrive/cuid2';
 
-function UpdatedProjectPage() {
+function NewProjectForm(props) {
   const router = useRouter();
-  const { id } = router.query; // Get the project ID from the URL
-  const [project, setProject] = useState(null); // State to store project data
-  const [isLoading, setIsLoading] = useState(true); // To handle loading state
+  const titleInputRef = useRef();
+  const descriptionInputRef = useRef();
 
-  // Fetch project data when the component mounts
-  useEffect(() => {
-    if (id) {
-      const fetchProjectData = async () => {
-        try {
-          const response = await fetch(`/api/get-project?id=${id}`);
-          if (!response.ok) {
-            throw new Error('Failed to fetch project');
-          }
-          const data = await response.json();
-          setProject(data.project); // Assuming the response contains a "project" field
-        } catch (error) {
-          console.error('Error fetching project data:', error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
+  function submitHandler(event) {
+    event.preventDefault();
 
-      fetchProjectData();
-    }
-  }, [id]);
+    const enteredTitle = titleInputRef.current.value;
+    const enteredDescription = descriptionInputRef.current.value;
 
-  // Handle the project update submission
-  const updateProjectHandler = async (updatedProjectData) => {
-    const response = await fetch('/api/update-project', {
-      method: 'PUT',
-      body: JSON.stringify(updatedProjectData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const projectData = {
+      projectId: createId(),
+      title: enteredTitle,
+      description: enteredDescription,
+    };
 
-    const data = await response.json();
+    props.onAddProject(projectData);
+  }
 
-    if (response.ok) {
-      router.push('/'); // Redirect to home page on success
-    } else {
-      console.error('Failed to update project:', data.error);
-    }
-  };
-
-  // If project data is available, render the UpdateProjectForm
   return (
-    <UpdatedProjectForm project={project} onUpdateProject={updateProjectHandler} />
+    <Card>
+      <form className={classes.form} onSubmit={submitHandler}>
+        <div className={classes.control}>
+          <label htmlFor='title'>Project Title</label>
+          <input type='text' required id='title' ref={titleInputRef} />
+        </div>
+        <div className={classes.control}>
+          <label htmlFor='description'>Description</label>
+          <textarea
+            id='description'
+            required
+            rows='5'
+            ref={descriptionInputRef}
+          ></textarea>
+        </div>
+        <div className={classes.actions}>
+          <button>Add Project</button>
+        </div>
+      </form>
+    </Card>
   );
 }
 
-export default UpdatedProjectPage;
+export default NewProjectForm;

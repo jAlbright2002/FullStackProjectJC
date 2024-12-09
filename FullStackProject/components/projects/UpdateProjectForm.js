@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Card from '../ui/Card';
-import { updateProjectData } from '../../pages/api/update-project'
 import classes from './NewProjectForm.module.css';
+import { useRouter } from 'next/router';
 
-function UpdateProjectForm({ project, onUpdateProject }) {
+function UpdateProjectForm({ project }) {
+  const router = useRouter();
   const titleInputRef = useRef();
   const descriptionInputRef = useRef();
 
@@ -14,16 +15,50 @@ function UpdateProjectForm({ project, onUpdateProject }) {
     }
   }, [project]);
 
+  async function updateProjectHandler(projectId, title, description) {
+    try {
+      const response = await fetch(`/api/update-project?id=${projectId}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          projectId,
+          title,
+          description,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Project updated successfully');
+        router.push(`/`);
+      } else {
+        console.error('Failed to update project', data);
+      }
+    } catch (error) {
+      console.error('Error updating project:', error);
+    }
+  }
+
   async function submitHandler(event) {
     event.preventDefault();
-
-    const enteredTitle = titleInputRef.current.value;
+  
+    const enteredTitle = titleInputRef.current.value; // Get the value, not the ref
     const enteredDescription = descriptionInputRef.current.value;
-
-    const updatedProject = await updateProjectData(project.projectId, enteredTitle, enteredDescription);
-
-    onUpdateProject(updatedProject);
+  
+    try {
+      const updatedProject = await updateProjectHandler(
+        project.projectId,
+        enteredTitle,
+        enteredDescription // Use values here
+      );
+      router.push(`/`); // Navigate to the desired page
+    } catch (error) {
+      console.error('Error during project update:', error);
+    }
   }
+  
 
   return (
     <Card>

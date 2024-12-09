@@ -3,7 +3,7 @@ async function handler(req, res) {
   
     try {
       // Assuming you're calling a backend service (like your local server or DB)
-      const response = await fetch(`http://localhost:8000/getProject?id=${id}`, {
+      const response = await fetch(`http://localhost:8000/getProject/${id}`, {
         method: 'GET', // Using GET since we're fetching data
         headers: {
           'Content-Type': 'application/json',

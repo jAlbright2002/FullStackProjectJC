@@ -19,13 +19,11 @@ let projects = oldMong.model('projects', projectSchema);
 
 router.get('/', async function (req, res, next) {
   const projects = await getAllProjects();
-  console.log(projects);
   res.render('index');
 });
 
 router.post('/getProjects', async function (req, res, next) {
   const projects = await getAllProjects();
-  console.log(projects);
   res.json(projects);
 });
 
@@ -34,16 +32,26 @@ async function getAllProjects() {
   return { projects: data };
 }
 
-router.post('/getProject/:id', async function (req, res, next) {
-  const projects = await getProject();
-  console.log(projects);
-  res.json(projects);
-});
+router.get('/getProject/:id', async function (req, res, next) {
+  const { id } = req.params; // Extract 'id' from the URL parameters
+  try {
+    // Find the project with the given ID
+    const project = await projects.findOne({ projectId: id }).lean();
 
-async function getProject() {
-  data = await projects.find().lean();
-  return { projects: data };
-}
+    if (!project) {
+      // If no project is found, send a 404 response
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    // Return the found project as JSON
+    res.json(project);
+  } catch (error) {
+    console.error('Error fetching project:', error);
+
+    // Send a 500 response for any server errors
+    res.status(500).json({ error: 'Failed to fetch project', details: error.message });
+  }
+});
 
 router.post('/saveProject', async function (req, res, next) {
   const projects = await saveProject(req.body);
@@ -95,8 +103,8 @@ async function deleteProject(projectId) {
 }
 
 router.put('/updateProject/:id', async (req, res) => {
-  const { id } = req.query;  // Get project ID from query params
-  const updatedData = req.body;  // Get updated data from the request body
+  const { id } = req.params;  // Use req.params to access the dynamic route parameter
+  const updatedData = req.body;
 
   try {
     const project = await updateProject(id, updatedData);
@@ -130,6 +138,7 @@ async function updateProject(projectId, updatedData) {
     return { updateProjectResponse: "fail" };
   }
 }
+
 
 
 //Ticket CRUD

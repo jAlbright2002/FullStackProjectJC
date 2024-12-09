@@ -1,28 +1,27 @@
-// our-dimain.com/new-project
-import UpdatedProjectForm from '../../components/projects/UpdateProjectForm'
+import { useEffect, useState } from 'react';
+import UpdateProjectForm from '../../components/projects/UpdateProjectForm'; // Adjust path as needed
 import { useRouter } from 'next/router';
 
 function UpdatedProjectPage() {
-    const router = useRouter();
-    async function updateProjectHandler(enteredProjectData) {
-  const response = await fetch(`/api/update-project?id=${enteredProjectData.id}`, {
-    method: 'PUT',  // Use PUT for updates
-    body: JSON.stringify(enteredProjectData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const router = useRouter();
+  const [project, setProject] = useState(null); // Use React state to persist data
 
-  const data = await response.json();
-  if (response.ok) {
-    console.log('Project updated successfully');
-    router.push(`/project/${enteredProjectData.id}`);  // Redirect after successful update
-  } else {
-    console.error('Failed to update project', data);
-  }
+  useEffect(() => {
+    if (router.query.id) {
+      async function fetchProject() {
+        try {
+          const response = await fetch(`/api/get-project?id=${router.query.id}`);
+          const data = await response.json();
+          setProject(data); // Ensure your API sends data.project
+        } catch (error) {
+          console.error('Error fetching project:', error);
+        }
+      }
+      fetchProject();
+    }
+  }, [router.query.id]);
+
+  return <UpdateProjectForm project={project} />
 }
 
-    return <UpdatedProjectForm onUpdateProject={updateProjectHandler} />
-}
-
-export default UpdatedProjectPage
+export default UpdatedProjectPage;

@@ -142,10 +142,10 @@ async function updateProject(projectId, updatedData) {
 let ticketSchema = new Schema({
   title: String,
   description: String,
-  project: String
+  projectId: String
 }, { collection: 'ticket' });
 
-let ticket = oldMong.model('ticket', ticketSchema);
+let tickets = oldMong.model('ticket', ticketSchema);
 
 router.get('/', async function (req, res, next) {
   const tickets = await getTicket();
@@ -153,14 +153,31 @@ router.get('/', async function (req, res, next) {
 });
 
 router.post('/getTickets', async function (req, res, next) {
-  const tickets = await getTicket();
+  const tickets = await getTickets();
   res.json(tickets);
 });
 
-async function getTicket() {
-  data = await ticket.find().lean();
+async function getTickets() {
+  data = await tickets.find().lean();
   return { ticket: data };
 }
+
+router.get('/getTicket/:id', async function (req, res, next) {
+  const { id } = req.params; 
+  try {
+    const ticket = await tickets.findOne({ ticketId: id }).lean();
+
+    if (!ticket) {
+      return res.status(404).json({ error: 'Ticket not found' });
+    }
+
+    res.json(ticket);
+  } catch (error) {
+    console.error('Error fetching ticket:', error);
+
+    res.status(500).json({ error: 'Failed to fetch ticket', details: error.message });
+  }
+});
 
 router.post('/saveTicket', async function (req, res, next) {
   const tickets = await saveTicket(req.body);
@@ -169,7 +186,7 @@ router.post('/saveTicket', async function (req, res, next) {
 
 async function saveTicket(theTicket) {
   console.log('theTicket: ' + theTicket);
-  await projects.create(theTicket,
+  await tickets.create(theTicket,
     function (err, res) {
       if (err) {
         console.log('Could not insert new ticket')
@@ -178,6 +195,75 @@ async function saveTicket(theTicket) {
     }
   )
   return { saveTicketResponse: "success" };
+}
+
+router.delete('/deleteTicket/:id', async (req, res) => {
+  const ticketId = req.params.id;
+  try {
+    const ticket = await deleteTicket(ticketId);
+    if (ticket.deleteTicketResponse === 'success') {
+      res.json({ message: 'Ticket deleted successfully', ticketId });
+    } else {
+      res.status(404).json({ error: 'Ticket not found' });
+    }
+  } catch (err) {
+    console.log('Error deleting ticket:', err);
+    res.status(500).json({ error: 'Could not delete ticket' });
+  }
+});
+
+
+async function deleteTicket(ticketId) {
+  try {
+    const deletedTicket = await tickets.findOneAndDelete({ ticketId: ticketId });
+
+    if (!deletedTicket) {
+      console.log('No ticket found with the given ticketId');
+      return { deleteTicketResponse: "fail" };
+    }
+
+    return { deleteTicketResponse: "success" };
+  } catch (err) {
+    console.log('Error during delete:', err);
+    return { deleteTicketResponse: "fail" };
+  }
+}
+
+router.put('/updateTicket/:id', async (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+
+  try {
+    const ticket = await updateTicket(id, updatedData);
+    if (ticket.updateTicketResponse === 'success') {
+      res.status(200).json({ message: 'Ticket updated successfully', ticket });
+    } else {
+      res.status(404).json({ error: 'Ticket not found' });
+    }
+  } catch (err) {
+    console.log('Error updating ticket:', err);
+    res.status(500).json({ error: 'Could not update ticket' });
+  }
+});
+
+async function updateTicket(ticketId, updatedData) {
+  try {
+    const updatedTicket = await tickets.findOneAndUpdate(
+      { tickedId: ticketId }, 
+      updatedData,              
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedTicket) {
+      console.log('No ticket found with the given tickedId');
+      return { updateTicketResponse: "fail" };
+    }
+
+    return { updateTicketResponse: "success", updatedTicket };
+  } catch (err) {
+    console.log('Error during update:', err);
+    return { updateTicketResponse: "fail" };
+  }
 }
 
 module.exports = router;

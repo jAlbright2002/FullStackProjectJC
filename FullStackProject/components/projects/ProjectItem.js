@@ -7,7 +7,7 @@ function ProjectItem(props) {
 
   function showDetailsHandler() {
     //This should route to the task list page
-    //router.push(`/update-project?id=${props.id}`);
+    router.push('/' + props.id);
   }
 
   async function deleteProjectHandler() {
